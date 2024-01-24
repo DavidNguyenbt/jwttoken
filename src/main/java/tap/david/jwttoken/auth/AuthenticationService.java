@@ -9,6 +9,10 @@ import tap.david.jwttoken.config.JwtService;
 import tap.david.jwttoken.user.UserDemo;
 import tap.david.jwttoken.user.UserRepository;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -16,6 +20,7 @@ public class AuthenticationService {
     private final UserRepository repository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    public String token;
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = UserDemo.builder()
@@ -39,8 +44,13 @@ public class AuthenticationService {
         var user = repository.findByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
+        token = jwtToken;
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+    public String getToken()
+    {
+        return token;
     }
 }

@@ -1,0 +1,27 @@
+version: "2.1"
+services:
+
+  jwttoken:
+
+    image: jwttoken
+
+    container_name: jwt_token
+
+    build:
+
+      context: .
+
+      dockerfile: ./Dockerfile
+
+    hostname: jwt_token
+
+    ports:
+
+      - "8083:8083"
+
+    networks:
+
+      - jwttokensnet
+networks:
+
+  microservicesnet:
